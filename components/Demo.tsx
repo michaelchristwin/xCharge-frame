@@ -130,7 +130,7 @@ export default function Demo() {
               <div className="relative">
                 <Input
                   type="text"
-                  name="tokenId"
+                  name="id"
                   inputMode={`numeric`}
                   onKeyDown={handleKeyDown}
                   placeholder="M3ter ID"
