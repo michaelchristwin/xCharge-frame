@@ -1,13 +1,14 @@
 import { createConfig, http, WagmiProvider } from "wagmi";
-import { base } from "wagmi/chains";
+import { mainnet, baseSepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { frameConnector } from "@/lib/connector";
 import abi from "@/ABIs/abi.json";
 
 export const config = createConfig({
-  chains: [base],
+  chains: [baseSepolia, mainnet],
   transports: {
-    [base.id]: http(),
+    [baseSepolia.id]: http(),
+    [mainnet.id]: http(),
   },
   connectors: [frameConnector()],
 });
@@ -23,6 +24,11 @@ export default function Provider({ children }: { children: React.ReactNode }) {
 }
 
 export const contractConfig = {
-  address: "0x2b3997D82C836bd33C89e20fBaEF96CA99F1B24A",
+  address: "0x16008fD81f1FFf5B5Fb52A279778d187d69276fd",
   abi: abi,
+} as const;
+
+export const contextContractConfig = {
+  address: "",
+  chainId: 1,
 } as const;

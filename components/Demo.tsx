@@ -1,61 +1,57 @@
 import sdk from "@farcaster/frame-sdk";
-import { FormEvent, useEffect, useState } from "react";
-import { SendHorizontal } from "lucide-react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+import { FormEvent, useCallback, useEffect, useState } from "react";
+import { SendHorizontal, Wallet } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  useReadContract,
+  useAccount,
+  useConnect,
   useWaitForTransactionReceipt,
-  useWriteContract,
+  useSendTransaction,
 } from "wagmi";
-import { formatUnits, parseEther } from "viem";
+import { encodeFunctionData, formatUnits } from "viem";
 //@ts-ignore
 import { M3terHead, m3terAlias } from "m3ters";
-import { contractConfig } from "./providers/WagmiProvider";
+import { config, contractConfig } from "./providers/WagmiProvider";
+import { capitalizeWords } from "@/lib/utils";
 
 export default function Demo() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+
   const [formState, setFormState] = useState({
     amount: "",
     id: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const { data: hash, writeContract } = useWriteContract();
 
-  const { data: tarrif } = useReadContract({
-    ...contractConfig,
-    functionName: "tariffOf",
-    args: [BigInt(formState.id)],
-  });
+  const { data: hash, sendTransaction } = useSendTransaction();
+  const { connect } = useConnect();
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      setIsLoading(true);
-      writeContract({
-        ...contractConfig,
+  const { isConnected } = useAccount();
+  const tarrif = "60000000000000000";
+  // useReadContract({
+  //   ...contractConfig,
+  //   functionName: "tariffOf",
+
+  //   args: [BigInt(formState.id)],
+  // });
+
+  const handleSubmit = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const data = encodeFunctionData({
+        abi: contractConfig.abi,
         functionName: "pay",
-        value: parseEther(formState.amount),
-        args: [BigInt(formState.id)],
+        args: [BigInt(formState.id), BigInt(formState.amount)],
       });
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-      // setFormState({
-      //   tokenId: "",
-      //   amount: 0,
-      // });
-    }
-  };
+      sendTransaction({
+        to: contractConfig.address,
+        data: data,
+      });
+    },
+    [sendTransaction]
+  );
 
   const handleKeyDown = (e: any) => {
     if (
@@ -75,7 +71,7 @@ export default function Demo() {
       [name]: value,
     }));
   };
-  const { isLoading: _isConfirming, isSuccess: isConfirmed } =
+  const { isLoading: isConfirming, isSuccess: _isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
     });
@@ -89,41 +85,33 @@ export default function Demo() {
       load();
     }
   }, [isSDKLoaded]);
+
+  if (!isSDKLoaded) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div
       style={{
         backgroundImage:
           "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/gnosis3.png')",
       }}
-      className={`min-h-screen bg-contain bg-center bg-[#121212] bg-no-repeat flex items-center justify-center p-4`}
+      className="min-h-screen bg-contain bg-center bg-[#121212] bg-no-repeat flex items-center justify-center p-4"
     >
       <Card className="w-full max-w-md border border-green-500/20 bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10">
-        <CardHeader className="space-y-1 border-b border-green-500/20">
-          <CardTitle className="text-2xl font-bold text-center flex items-center justify-center text-white">
-            <img
-              src="https://docs.gnosischain.com/img/tokens/xdai.png"
-              alt="xDAI logo"
-              className={`w-[25px] h-[25px]`}
-            />
-            Charge
-          </CardTitle>
-        </CardHeader>
+        {/* Removed CardHeader with page title */}
         <CardContent className="mt-4">
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className={`w-full flex flex-col h-fit items-center`}>
+            <div className="w-full flex flex-col h-fit items-center">
               {formState.id ? (
                 <>
                   <M3terHead seed={formState.id} size={100} />
                   <p className="text-[13px] font-bold text-green-400 gap-2">
-                    {m3terAlias(formState.id)}
+                    {capitalizeWords(m3terAlias(formState.id))}
                   </p>
                 </>
               ) : (
-                <>
-                  <Skeleton
-                    className={`bg-gray-900 w-[100px] h-[100px] rounded-[10px]`}
-                  />
-                </>
+                <Skeleton className="bg-gray-900 w-[100px] h-[100px] rounded-[10px]" />
               )}
             </div>
             <div className="space-y-2">
@@ -148,7 +136,7 @@ export default function Demo() {
                 <Input
                   name="amount"
                   type="text"
-                  inputMode={`decimal`}
+                  inputMode="decimal"
                   placeholder="Amount"
                   value={formState.amount}
                   onKeyDown={handleKeyDown}
@@ -159,7 +147,7 @@ export default function Demo() {
                   <img
                     src="https://docs.gnosischain.com/img/tokens/xdai.png"
                     alt="xDAI logo"
-                    className={`w-[25px] h-[25px]`}
+                    className="w-[25px] h-[25px]"
                   />
                 </span>
               </div>
@@ -180,33 +168,49 @@ export default function Demo() {
                 </span>
               </div>
             </div>
-            <Button
-              type="submit"
-              className="w-full h-11 bg-green-600 hover:bg-green-700 transition-all duration-200"
-              disabled={isLoading || !formState.id || !formState.amount}
-            >
-              {isLoading ? (
-                <div className="flex items-center gap-2">
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
-                  Confirming Transaction...
-                </div>
+            <div>
+              {/* Single button: shows "Connect" if not connected, and "Pay" if connected */}
+              {!isConnected ? (
+                <Button
+                  onClick={() => connect({ connector: config.connectors[0] })}
+                  className="inline-flex items-center justify-center gap-2 px-4 h-11 bg-blue-600 hover:bg-blue-700 text-white transition-all duration-200 rounded-md w-full"
+                >
+                  Connect <Wallet className="h-4 w-4" />
+                </Button>
               ) : (
-                <div className="flex items-center gap-2">
-                  Pay
-                  <SendHorizontal className="h-4 w-4" />
-                </div>
+                <Button
+                  type="submit"
+                  className="w-full h-11 bg-green-600 hover:bg-green-700 transition-all duration-200"
+                  disabled={isConfirming || !formState.id || !formState.amount}
+                >
+                  {isConfirming ? (
+                    <div className="flex items-center gap-2">
+                      <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                      Confirming Transaction...
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      Pay
+                      <SendHorizontal className="h-4 w-4" />
+                    </div>
+                  )}
+                </Button>
               )}
-            </Button>
+            </div>
           </form>
         </CardContent>
-        <CardFooter className="justify-center text-xs text-gray-500 flex flex-col gap-1">
+        {/* Commented out CardFooter using BuiltOnETH */}
+
+        {/* <CardFooter className="justify-center text-xs text-gray-500 flex flex-col gap-1">
           <div className="flex items-center gap-1">
-            <img
-              src={"/built-on-ethereum2.png"}
-              className={`h-[50px] w-[160px]`}
-            />
+            <p
+              className={`underline text-purple-500`}
+              onClick={() => disconnect()}
+            >
+              disconnect
+            </p>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   );
