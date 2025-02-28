@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import { AppContextProvider } from "@/components/providers/AppContextProvider";
 import dynamic from "next/dynamic";
 
 const WagmiProvider = dynamic(
@@ -13,8 +14,10 @@ const WagmiProvider = dynamic(
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider>
-      <Navbar />
-      {children}
+      <AppContextProvider>
+        <Navbar />
+        {children}
+      </AppContextProvider>
     </WagmiProvider>
   );
 }
