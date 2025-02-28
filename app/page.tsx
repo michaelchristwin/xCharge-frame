@@ -2,14 +2,14 @@
 
 import dynamic from "next/dynamic";
 
-const Demo = dynamic(() => import("@/components/Demo"), {
+const PaymentForm = dynamic(() => import("@/components/PaymentForm"), {
   ssr: false,
 });
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col">
-      <Demo />
+      <PaymentForm />
     </main>
   );
 }
