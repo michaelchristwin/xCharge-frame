@@ -1,5 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { ChevronRight, Plus, Loader2, SendHorizonal } from "lucide-react";
+import {
+  ChevronRight,
+  Plus,
+  Loader2,
+  SendHorizonal,
+  CircleHelp,
+} from "lucide-react";
 import { encodeFunctionData } from "viem";
 import { contractConfig } from "./providers/WagmiProvider";
 import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
@@ -31,13 +37,14 @@ const PaymentForm = () => {
   const { data: hash, sendTransaction } = useSendTransaction();
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const cached = localStorage.getItem("lastTokenId");
     if (cached) {
       setTokenId(cached);
       setStep(2);
       setAvatarTransitioned(true);
     }
-  });
+  }, []);
 
   const openSlideshow = () => {
     setIsOpen(true);
@@ -253,10 +260,11 @@ const PaymentForm = () => {
             </div>
           </div>
           <p
-            className={`text-gray-500 text-center underline hover:cursor-pointer`}
+            className={`text-gray-500 text-center underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
             onClick={openSlideshow}
           >
-            not sure what this is?
+            <span> not sure what this is</span>
+            <CircleHelp className="w-4 h-4" />
           </p>
         </div>
       </div>
