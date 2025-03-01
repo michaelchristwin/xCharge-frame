@@ -37,7 +37,7 @@ const PaymentForm = () => {
       setStep(2);
       setAvatarTransitioned(true);
     }
-  }, []);
+  });
 
   const openSlideshow = () => {
     setIsOpen(true);
@@ -91,7 +91,7 @@ const PaymentForm = () => {
   const handleSubmit = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      //alert(`Submit clicked, tokenId:", ${tokenId}, "amount:", ${totalAmount}`);
+
       const data = encodeFunctionData({
         abi: contractConfig.abi,
         functionName: "pay",
@@ -103,10 +103,10 @@ const PaymentForm = () => {
         data: data,
       });
     },
-    [sendTransaction]
+    [sendTransaction, tokenId, totalAmount]
   );
 
-  const { isLoading: isConfirming, isSuccess: _isConfirmed } =
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({
       hash,
     });
@@ -124,7 +124,14 @@ const PaymentForm = () => {
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
   }
-  console.log("avatarTransitoned:", avatarTransitioned, "tokenId:", tokenId);
+  console.log(
+    "avatarTransitoned:",
+    avatarTransitioned,
+    "tokenId:",
+    tokenId,
+    "isConfirmed: ",
+    isConfirmed
+  );
   return (
     <div className="min-h-screen p-4 mt-[100px]">
       {/* Background decoration */}
