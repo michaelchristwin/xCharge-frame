@@ -168,7 +168,7 @@ const PaymentForm = () => {
                 {tokenId ? (
                   <>
                     <M3terHead seed={tokenId} size={100} />
-                    <p className="text-[13px] font-bold text-green-400 gap-2">
+                    <p className="text-[13px] font-bold text-white gap-2">
                       {capitalizeWords(m3terAlias(tokenId))}
                     </p>
                   </>
@@ -181,7 +181,7 @@ const PaymentForm = () => {
                 value={tokenId}
                 onChange={handleTokenIdChange}
                 placeholder="Enter M3ter ID"
-                className="w-full text-lg bg-transparent border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
+                className="w-full text-lg bg-transparent placeholder:text-neutral-500 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
               />
               <button
                 onClick={handleNextStep}
@@ -229,7 +229,7 @@ const PaymentForm = () => {
                   value={customAmount}
                   onChange={handleCustomAmountChange}
                   placeholder="Enter amount"
-                  className="w-full text-lg bg-transparent border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
+                  className="w-full text-lg bg-transparent placeholder:text-neutral-500 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
                 />
               )}
 
@@ -260,7 +260,7 @@ const PaymentForm = () => {
             </div>
           </div>
           <p
-            className={`text-gray-500 text-center underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
+            className={`text-neutral-600 text-center underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
             onClick={openSlideshow}
           >
             <span> not sure what this is</span>
