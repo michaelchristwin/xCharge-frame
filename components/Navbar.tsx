@@ -1,5 +1,5 @@
 import { Lightbulb } from "lucide-react";
-//@ts-ignore
+// @ts-expect-error: No type declaration for the module
 import { M3terHead, m3terAlias } from "m3ters";
 import { useAppContext } from "./providers/AppContextProvider";
 
@@ -20,6 +20,7 @@ const Navbar = () => {
           <span className="text-sm font-normal text-red-400">beta</span>
         </span>
       </div>
+      {/* Clickable Avatar */}
       {tokenId && avatarTransitioned && (
         <button
           onClick={handlePreviousStep}

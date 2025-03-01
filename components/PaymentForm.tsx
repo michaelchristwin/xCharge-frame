@@ -3,7 +3,7 @@ import { ChevronRight, Plus, Loader2, SendHorizonal } from "lucide-react";
 import { encodeFunctionData } from "viem";
 import { contractConfig } from "./providers/WagmiProvider";
 import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
-//@ts-ignore
+// @ts-expect-error: No type declaration for the module
 import { M3terHead, m3terAlias } from "m3ters";
 import sdk from "@farcaster/frame-sdk";
 import { useAppContext } from "./providers/AppContextProvider";
@@ -132,8 +132,6 @@ const PaymentForm = () => {
         <div className="absolute top-20 left-20 w-64 h-64 bg-purple-300 rounded-full blur-3xl opacity-40" />
         <div className="absolute bottom-40 right-20 w-96 h-96 bg-purple-400 rounded-full blur-3xl opacity-40" />
       </div>
-
-      {/* Clickable Avatar */}
 
       <div className="max-w-xl mx-auto relative">
         {/* Avatar next to input */}
