@@ -173,7 +173,7 @@ const PaymentForm = () => {
                     </p>
                   </>
                 ) : (
-                  <Skeleton className="bg-gray-900 w-[100px] h-[100px] rounded-[10px]" />
+                  <Skeleton className="bg-white/20 w-[100px] h-[100px] rounded-[10px]" />
                 )}
               </div>
               <input
