@@ -1,6 +1,6 @@
 import { Lightbulb } from "lucide-react";
 // @ts-expect-error: No type declaration for the module
-import { M3terHead, m3terAlias } from "m3ters";
+import { M3terHead } from "m3ters";
 import { useAppContext } from "./providers/AppContextProvider";
 
 const Navbar = () => {
