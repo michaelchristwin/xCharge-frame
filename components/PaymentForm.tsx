@@ -9,6 +9,7 @@ import sdk from "@farcaster/frame-sdk";
 import { useAppContext } from "./providers/AppContextProvider";
 import { capitalizeWords } from "@/lib/utils";
 import { Skeleton } from "./ui/skeleton";
+import M3teringSlideshow from "./M3teringSlideshow";
 
 const ENERGY_PRICE_PER_KWH = 0.06;
 const PRESET_AMOUNTS = [1, 2, 5, 10, 20, 50, 100];
@@ -18,6 +19,7 @@ const PaymentForm = () => {
   const [customAmount, setCustomAmount] = useState("");
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const {
     setAvatarTransitioned,
     avatarTransitioned,
@@ -36,6 +38,18 @@ const PaymentForm = () => {
       setAvatarTransitioned(true);
     }
   }, []);
+
+  const openSlideshow = () => {
+    setIsOpen(true);
+    // Optional: prevent body scrolling when modal is open
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeSlideshow = () => {
+    setIsOpen(false);
+    // Restore body scrolling
+    document.body.style.overflow = "auto";
+  };
 
   useEffect(() => {
     if (tokenId) localStorage.setItem("lastTokenId", tokenId);
@@ -97,19 +111,19 @@ const PaymentForm = () => {
       hash,
     });
 
-  // useEffect(() => {
-  //   const load = async () => {
-  //     sdk.actions.ready();
-  //   };
-  //   if (sdk && !isSDKLoaded) {
-  //     setIsSDKLoaded(true);
-  //     load();
-  //   }
-  // }, [isSDKLoaded]);
+  useEffect(() => {
+    const load = async () => {
+      sdk.actions.ready();
+    };
+    if (sdk && !isSDKLoaded) {
+      setIsSDKLoaded(true);
+      load();
+    }
+  }, [isSDKLoaded]);
 
-  // if (!isSDKLoaded) {
-  //   return <div>Loading...</div>;
-  // }
+  if (!isSDKLoaded) {
+    return <div>Loading...</div>;
+  }
   console.log("avatarTransitoned:", avatarTransitioned, "tokenId:", tokenId);
   return (
     <div className="min-h-screen p-4 mt-[100px]">
@@ -235,11 +249,29 @@ const PaymentForm = () => {
           </div>
           <p
             className={`text-gray-500 text-center underline hover:cursor-pointer`}
+            onClick={openSlideshow}
           >
             not sure what this is?
           </p>
         </div>
       </div>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
+          {/* Close Button */}
+          <button
+            onClick={closeSlideshow}
+            className="absolute top-4 right-4 z-50 text-white text-2xl bg-transparent border-none cursor-pointer"
+            aria-label="Close slideshow"
+          >
+            ✕
+          </button>
+
+          {/* Swiper Component */}
+          <div className="w-full h-full max-w-5xl max-h-screen p-4">
+            <M3teringSlideshow />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -15,7 +15,10 @@ const Navbar = () => {
     <nav className="w-full h-[60px] flex justify-between items-center fixed top-0 left-0 bg-transparent px-4">
       <div className="flex items-center space-x-1">
         <Lightbulb className="text-yellow-500" size={30} />
-        <span className="text-2xl font-bold text-white">Watt-A-Frame</span>
+        <span className="lg:text-2xl md:text-2xl text-[20px] font-bold text-white">
+          Watt-A-Frame{" "}
+          <span className="text-sm font-normal text-red-400">beta</span>
+        </span>
       </div>
       {tokenId && avatarTransitioned && (
         <button
