@@ -21,8 +21,8 @@ const Navbar = () => {
           >
             Watt-A-Frame
           </span>
-          <div className="text-sm font-normal rounded-[10px] text-white bg-red-500 fle items-center justify-center px-2 h-[16px]">
-            beta
+          <div className="text-sm font-normal rounded-[12px] text-white bg-red-500 fle items-center justify-center px-[7px] h-[18px]">
+            <p>beta</p>
           </div>
         </div>
       </div>
