@@ -8,7 +8,7 @@ import Image from "next/image";
 import Meters from "@/public/image0.png";
 import Flywheel from "@/public/flywheel.jpg";
 import Hardware from "@/public/hardware.png";
-import Payment from "@/public/payment.avif";
+import Payment from "@/public/payment.png";
 import Onchain from "@/public/onchain.jpeg";
 import Design from "@/public/design.png";
 
