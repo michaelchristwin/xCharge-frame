@@ -16,6 +16,8 @@ import { useAppContext } from "./providers/AppContextProvider";
 import { capitalizeWords } from "@/lib/utils";
 import { Skeleton } from "./ui/skeleton";
 import M3teringSlideshow from "./M3teringSlideshow";
+import useEscapeKey from "@/hooks/useEscapeKey";
+import { useSearchParams } from "next/navigation";
 
 const ENERGY_PRICE_PER_KWH = 0.06;
 const PRESET_AMOUNTS = [1, 2, 5, 10, 20, 50, 100];
@@ -26,6 +28,8 @@ const PaymentForm = () => {
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const searchParams = useSearchParams();
+
   const {
     setAvatarTransitioned,
     avatarTransitioned,
@@ -62,6 +66,17 @@ const PaymentForm = () => {
     if (tokenId) localStorage.setItem("lastTokenId", tokenId);
   }, [tokenId]);
 
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const tokenFromParams = searchParams.get("id");
+    const amountFromParams = searchParams.get("amount");
+    if (tokenFromParams) {
+      setTokenId(tokenFromParams);
+    }
+    if (amountFromParams) {
+      setCustomAmount(amountFromParams);
+    }
+  }, []);
   const totalAmount =
     selectedAmounts.reduce((sum, amount) => sum + amount, 0) +
     (customAmount ? parseFloat(customAmount) : 0);
@@ -117,7 +132,7 @@ const PaymentForm = () => {
     useWaitForTransactionReceipt({
       hash,
     });
-
+  useEscapeKey(closeSlideshow);
   useEffect(() => {
     const load = async () => {
       sdk.actions.ready();
@@ -139,6 +154,7 @@ const PaymentForm = () => {
     "isConfirmed: ",
     isConfirmed
   );
+
   return (
     <div className="min-h-screen p-4 mt-[100px]">
       {/* Background decoration */}
