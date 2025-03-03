@@ -9,6 +9,8 @@ interface AppContextType {
   setAvatarTransitioned: (transitioned: boolean) => void;
   step: number;
   setStep: (step: number) => void;
+  slideOpen: boolean;
+  setSlideOpen: (state: boolean) => void;
 }
 
 // Create context with a meaningful default or null + type assertion
@@ -28,6 +30,7 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [tokenId, setTokenId] = useState("");
   const [avatarTransitioned, setAvatarTransitioned] = useState(false);
   const [step, setStep] = useState(1);
+  const [slideOpen, setSlideOpen] = useState(false);
 
   return (
     <AppContext.Provider
@@ -40,6 +43,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         step,
         setStep(sTep) {
           setStep(sTep);
+        },
+        slideOpen,
+        setSlideOpen(state) {
+          setSlideOpen(state);
         },
       }}
     >

@@ -1,14 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import {
-  ChevronRight,
-  Plus,
-  Loader2,
-  SendHorizonal,
-  CircleHelp,
-  CircleX,
-} from "lucide-react";
+import { ChevronRight, Loader2, SendHorizonal, CircleX } from "lucide-react";
 import { encodeFunctionData } from "viem";
 import { contractConfig } from "./providers/WagmiProvider";
 import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
@@ -28,9 +21,8 @@ const PRESET_AMOUNTS = [1, 2, 5, 10, 20, 50, 100];
 const PaymentForm = () => {
   const [selectedAmounts, setSelectedAmounts] = useState<number[]>([]);
   const [customAmount, setCustomAmount] = useState("");
-  const [showCustomInput, setShowCustomInput] = useState(false);
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+
   const searchParams = useSearchParams();
 
   const {
@@ -40,6 +32,8 @@ const PaymentForm = () => {
     setTokenId,
     setStep,
     step,
+    setSlideOpen,
+    slideOpen,
   } = useAppContext();
   const { data: hash, sendTransaction } = useSendTransaction();
 
@@ -53,14 +47,8 @@ const PaymentForm = () => {
     }
   }, []);
 
-  const openSlideshow = () => {
-    setIsOpen(true);
-    // Optional: prevent body scrolling when modal is open
-    document.body.style.overflow = "hidden";
-  };
-
   const closeSlideshow = () => {
-    setIsOpen(false);
+    setSlideOpen(false);
     // Restore body scrolling
     document.body.style.overflow = "auto";
   };
@@ -159,7 +147,7 @@ const PaymentForm = () => {
   );
 
   return (
-    <div className="min-h-screen p-4 mt-[100px]">
+    <div className="h-full p-4 mt-[100px]">
       {/* Background decoration */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute top-20 left-20 w-64 h-64 bg-purple-300 rounded-full blur-3xl opacity-40" />
@@ -234,23 +222,15 @@ const PaymentForm = () => {
                     ${amount}
                   </button>
                 ))}
-                <button
-                  onClick={() => setShowCustomInput(!showCustomInput)}
-                  className="p-4 text-center rounded-lg bg-white/70 hover:bg-white/90"
-                >
-                  <Plus className="mx-auto h-6 w-6" />
-                </button>
               </div>
 
-              {showCustomInput && (
-                <input
-                  type="text"
-                  value={customAmount}
-                  onChange={handleCustomAmountChange}
-                  placeholder="Enter amount"
-                  className="w-full text-lg bg-transparent placeholder:text-neutral-500 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
-                />
-              )}
+              <input
+                type="text"
+                value={customAmount}
+                onChange={handleCustomAmountChange}
+                placeholder="Enter amount"
+                className="w-full text-lg bg-transparent placeholder:text-neutral-500 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
+              />
 
               {totalAmount > 0 && (
                 <div className="text-sm text-gray-600 mb-4 border-t border-purple-200 pt-2">
@@ -278,16 +258,9 @@ const PaymentForm = () => {
               </button>
             </div>
           </div>
-          <p
-            className={`text-neutral-600 text-center underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
-            onClick={openSlideshow}
-          >
-            <span> not sure what this is</span>
-            <CircleHelp className="w-4 h-4" />
-          </p>
         </div>
       </div>
-      {isOpen && (
+      {slideOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
           {/* Close Button */}
           <button

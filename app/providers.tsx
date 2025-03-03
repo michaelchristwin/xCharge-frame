@@ -1,5 +1,6 @@
 "use client";
 
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { AppContextProvider } from "@/components/providers/AppContextProvider";
 import dynamic from "next/dynamic";
@@ -17,6 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       <AppContextProvider>
         <Navbar />
         {children}
+        <Footer />
       </AppContextProvider>
     </WagmiProvider>
   );
