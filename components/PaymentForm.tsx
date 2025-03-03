@@ -7,6 +7,7 @@ import {
   Loader2,
   SendHorizonal,
   CircleHelp,
+  CircleX,
 } from "lucide-react";
 import { encodeFunctionData } from "viem";
 import { contractConfig } from "./providers/WagmiProvider";
@@ -291,10 +292,10 @@ const PaymentForm = () => {
           {/* Close Button */}
           <button
             onClick={closeSlideshow}
-            className="absolute top-4 right-4 z-50 text-white text-2xl bg-transparent border-none cursor-pointer"
+            className="absolute top-6 right-6 z-50 bg-transparent border-none cursor-pointer"
             aria-label="Close slideshow"
           >
-            ✕
+            <CircleX className={`lg:text-white text-black`} />
           </button>
 
           {/* Swiper Component */}
