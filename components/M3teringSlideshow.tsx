@@ -38,6 +38,19 @@ const slidesData: SlidesStruct[] = [
       alt: "M3ters NFT",
     },
   },
+
+  {
+    title: "Our hardware",
+    description: `They are bound onchain to smart energy meters that measure power consumption and facilitate decentralized settlements. Each M3ter has a unique ID, linking it to energy consumption data and payments.`,
+    more: {
+      url: "https://m3tering.whynotswitch.com/token-economics/m3ter-nfts",
+      linkText: "Further reading",
+    },
+    image: {
+      imageData: Hardware,
+      alt: "Maxwell v1 in operation",
+    },
+  },
   {
     title: "What is the M3tering Protocol?",
     description: `Users pay energy providers directly by sending stablecoins to an M3ter ID,
@@ -49,18 +62,6 @@ const slidesData: SlidesStruct[] = [
     image: {
       imageData: Onchain,
       alt: "Flywheel effect",
-    },
-  },
-  {
-    title: "Our hardware",
-    description: `They are bound onchain to smart energy meters that measure power consumption and facilitate decentralized settlements. Each M3ter has a unique ID, linking it to energy consumption data and payments.`,
-    more: {
-      url: "https://m3tering.whynotswitch.com/token-economics/m3ter-nfts",
-      linkText: "Further reading",
-    },
-    image: {
-      imageData: Hardware,
-      alt: "Maxwell v1 in operation",
     },
   },
   {
@@ -92,7 +93,7 @@ function M3teringSlideshow() {
       >
         {slidesData.map((slide, i) => (
           <SwiperSlide className="!flex justify-center items-center" key={i}>
-            <Card className="lg:w-[400px] md:w-[400px] w-[350px] lg:h-[400px] md:h-[400px] h-[350px]">
+            <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[400px] md:h-[400px] h-[350px]">
               <CardHeader></CardHeader>
               <CardContent className="space-y-2 block">
                 <div className="w-full flex justify-center">
