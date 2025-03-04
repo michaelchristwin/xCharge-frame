@@ -93,9 +93,8 @@ function M3teringSlideshow() {
       >
         {slidesData.map((slide, i) => (
           <SwiperSlide className="!flex justify-center items-center" key={i}>
-            <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[400px] md:h-[400px] h-[350px]">
-              <CardHeader></CardHeader>
-              <CardContent className="space-y-2 block">
+            <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[400px] md:h-[400px] h-[320px]">
+              <CardContent className="space-y-2 block mt-[20px]">
                 <div className="w-full flex justify-center">
                   <div className="relative w-[350px] aspect-[16/9] overflow-hidden">
                     <Image
