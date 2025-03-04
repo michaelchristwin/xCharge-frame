@@ -32,9 +32,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Home() {
-  return (
-    <main className="min-h-screen flex flex-col">
-      <PaymentForm />
-    </main>
-  );
+  return <PaymentForm />;
 }

@@ -1,6 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useSyncExternalStore,
+  useMemo,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import { ChevronRight, Loader2, SendHorizonal, CircleX } from "lucide-react";
 import { encodeFunctionData } from "viem";
 import { contractConfig } from "./providers/WagmiProvider";
@@ -19,15 +27,15 @@ const ENERGY_PRICE_PER_KWH = 0.06;
 const PRESET_AMOUNTS = [1, 2, 5, 10, 20, 50, 100];
 
 const PaymentForm = () => {
-  const [selectedAmounts, setSelectedAmounts] = useState<number[]>([]);
-  const [customAmount, setCustomAmount] = useState("");
-  const [isSDKLoaded, setIsSDKLoaded] = useState(false);
-
   const searchParams = useSearchParams();
+  const amountFromParams = searchParams.get("amount");
+  const [selectedAmounts, setSelectedAmounts] = useState<number[]>([]);
+  const [customAmount, setCustomAmount] = useState(amountFromParams || "");
+  const [isSDKLoaded, setIsSDKLoaded] = useState(false);
 
   const {
     setAvatarTransitioned,
-    avatarTransitioned,
+
     tokenId,
     setTokenId,
     setStep,
@@ -37,15 +45,27 @@ const PaymentForm = () => {
   } = useAppContext();
   const { data: hash, sendTransaction } = useSendTransaction();
 
+  const tokenFromParams = useMemo(() => searchParams.get("id"), [searchParams]);
+  useLayoutEffect(() => {
+    if (tokenFromParams) setTokenId(tokenFromParams);
+  }, [tokenFromParams, setTokenId]);
+
+  const lastTokenId = useSyncExternalStore(
+    (callback) => {
+      window.addEventListener("storage", callback);
+      return () => window.removeEventListener("storage", callback);
+    },
+    () => localStorage.getItem("lastTokenId"),
+    () => localStorage.getItem("lastTokenId") // Server-side render fallback
+  );
+
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const cached = localStorage.getItem("lastTokenId");
-    if (cached) {
-      setTokenId(cached);
+    if (lastTokenId) {
+      setTokenId(lastTokenId);
       setStep(2);
       setAvatarTransitioned(true);
     }
-  }, []);
+  }, [lastTokenId]);
 
   const closeSlideshow = () => {
     setSlideOpen(false);
@@ -56,18 +76,18 @@ const PaymentForm = () => {
   useEffect(() => {
     if (tokenId) localStorage.setItem("lastTokenId", tokenId);
   }, [tokenId]);
+  const stableSetLocalStorage = useRef<(id: string) => void>(() => {});
+
+  stableSetLocalStorage.current = (tokenId: string) => {
+    if (tokenId) localStorage.setItem("lastTokenId", tokenId);
+  };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const tokenFromParams = searchParams.get("id");
-    const amountFromParams = searchParams.get("amount");
-    if (tokenFromParams) {
-      setTokenId(tokenFromParams);
-    }
-    if (amountFromParams) {
-      setCustomAmount(amountFromParams);
-    }
-  }, []);
+    stableSetLocalStorage.current?.(tokenId);
+  }, [tokenId]);
+
+  useEscapeKey(closeSlideshow);
+
   const totalAmount =
     selectedAmounts.reduce((sum, amount) => sum + amount, 0) +
     (customAmount ? parseFloat(customAmount) : 0);
@@ -119,11 +139,10 @@ const PaymentForm = () => {
     [sendTransaction, tokenId, totalAmount]
   );
 
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    });
-  useEscapeKey(closeSlideshow);
+  const { isLoading: isConfirming } = useWaitForTransactionReceipt({
+    hash,
+  });
+
   useEffect(() => {
     const load = async () => {
       sdk.actions.ready();
@@ -137,17 +156,9 @@ const PaymentForm = () => {
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
   }
-  console.log(
-    "avatarTransitoned:",
-    avatarTransitioned,
-    "tokenId:",
-    tokenId,
-    "isConfirmed: ",
-    isConfirmed
-  );
 
   return (
-    <div className="h-full p-4 mt-[100px]">
+    <div className="h-[calc(91vh-70px)] p-4 mt-[100px]">
       {/* Background decoration */}
       <div className="fixed inset-0 -z-10">
         <div className="absolute top-20 left-20 w-64 h-64 rounded-full blur-3xl opacity-40" />
@@ -222,11 +233,11 @@ const PaymentForm = () => {
                 value={customAmount}
                 onChange={handleCustomAmountChange}
                 placeholder="Enter amount"
-                className="w-full text-lg text-white bg-transparent placeholder:text-gray-400 border-b border-[#9b6dff] focus:border-purple-600 outline-none px-0 py-2 mb-4"
+                className="w-full text-lg text-white bg-transparent placeholder:text-gray-400 border-b border-[#9b6dff] focus:border-[#9b6dff] outline-none px-0 py-2 mb-4"
               />
 
               {totalAmount > 0 && (
-                <div className="text-sm text-white mb-4 border-t border-[#9b6dff] pt-2">
+                <div className="text-sm text-white mb-4 pt-2">
                   <div className="flex justify-between">
                     <span>${totalAmount.toFixed(2)}</span>
                     <span>{kwhValue.toFixed(2)} kWh⚡</span>

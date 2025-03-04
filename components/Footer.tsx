@@ -8,9 +8,11 @@ function Footer() {
     document.body.style.overflow = "hidden";
   };
   return (
-    <footer className={`w-full`}>
+    <footer
+      className={`w-full flex justify-center items-center bg-transparent p-1 h-[2vh]`}
+    >
       <p
-        className={`text-white text-center fixed bottom-0 right-0 w-full underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
+        className={`text-white underline hover:cursor-pointer flex justify-center items-center space-x-1`}
         onClick={openSlideshow}
       >
         <span>not sure what this is</span>
