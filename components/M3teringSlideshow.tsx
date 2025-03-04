@@ -93,8 +93,8 @@ function M3teringSlideshow() {
       >
         {slidesData.map((slide, i) => (
           <SwiperSlide className="!flex justify-center items-center" key={i}>
-            <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[400px] md:h-[400px] h-[320px]">
-              <CardContent className="space-y-2 block mt-[20px]">
+            <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[380px] md:h-[380px] h-[320px]">
+              <CardContent className="space-y-2 block">
                 <div className="w-full flex justify-center">
                   <div className="relative w-[350px] aspect-[16/9] overflow-hidden">
                     <Image
@@ -106,15 +106,17 @@ function M3teringSlideshow() {
                     />
                   </div>
                 </div>
-                <p className="lg:text-[13px] md:text-[13px] text-[11px]">
-                  {slide.description}
-                </p>
-                <Link
-                  href={slide.more.url}
-                  className="text-blue-600 hover:text-blue-800 lg:text-[13px] md:text-[13px] text-[11px] underline inline-block mx-auto"
-                >
-                  {slide.more.linkText}
-                </Link>
+                <div>
+                  <p className="lg:text-[13px] md:text-[13px] text-[11px] mt-[20px]">
+                    {slide.description}
+                  </p>
+                  <Link
+                    href={slide.more.url}
+                    className="text-blue-600 hover:text-blue-800 lg:text-[13px] md:text-[13px] text-[11px] underline inline-block mx-auto"
+                  >
+                    {slide.more.linkText}
+                  </Link>
+                </div>
               </CardContent>
             </Card>
           </SwiperSlide>
