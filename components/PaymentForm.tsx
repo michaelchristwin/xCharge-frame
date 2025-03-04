@@ -272,7 +272,7 @@ const PaymentForm = () => {
             className="absolute top-6 right-6 z-50 bg-transparent border-none cursor-pointer"
             aria-label="Close slideshow"
           >
-            <CircleX className={`lg:text-white text-black`} />
+            <CircleX className={`text-white`} />
           </button>
 
           {/* Swiper Component */}

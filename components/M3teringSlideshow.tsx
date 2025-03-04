@@ -5,13 +5,11 @@ import "swiper/css/pagination";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import Meters from "@/public/image0.png";
-import Flywheel from "@/public/flywheel.jpg";
-import Hardware from "@/public/hardware.png";
+import Meters from "@/public/nft.png";
+import Hardware from "@/public/m3ter.png";
 import Payment from "@/public/payment.png";
-// import Onchain from "@/public/onchain.jpeg";
-// import Design from "@/public/design.png";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import Onchain from "@/public/onchain.jpeg";
+import { Card, CardContent, CardHeader } from "./ui/card";
 
 type SlidesStruct = {
   title: string;
@@ -29,10 +27,7 @@ type SlidesStruct = {
 const slidesData: SlidesStruct[] = [
   {
     title: "What are M3ters?",
-    description: `M3ters are blockchain-enabled smart meters that securely
-                  record energy usage in real time. They form the backbone of a
-                  decentralized infrastructure protocol known as the M3tering
-                  Protocol.`,
+    description: `M3ters are NFTs that tokenize real world energy infrastructure such as solar & small hydro power plants on the m3tering protocol. They are the backbone of our decentralised physical infrastructure network (DePIN).`,
 
     more: {
       url: "https://m3tering.whynotswitch.com/",
@@ -45,23 +40,20 @@ const slidesData: SlidesStruct[] = [
   },
   {
     title: "What is the M3tering Protocol?",
-    description: `The m3tering protocol unifies smart metering, on-hain
-                  tokenization, and digital payments. It paves the way for a
-                  resilient, and transparent, and user-empowered energy network.`,
+    description: `Users pay energy providers directly by sending stablecoins to an M3ter ID,
+     which is mapped to the provider’s onchain wallet. Smart contracts automate billing and enforce payments based on verified consumption data.`,
     more: {
       url: "https://m3tering.whynotswitch.com/token-economics/m3ter-nfts",
       linkText: "Expore more",
     },
     image: {
-      imageData: Flywheel,
+      imageData: Onchain,
       alt: "Flywheel effect",
     },
   },
   {
     title: "Our hardware",
-    description: `Our hardware devices capture precise, real-time energy data
-                  for accurate billing. They bridge traditional energy metering
-                  with digital, on-chain capabilities.`,
+    description: `They are bound onchain to smart energy meters that measure power consumption and facilitate decentralized settlements. Each M3ter has a unique ID, linking it to energy consumption data and payments.`,
     more: {
       url: "https://m3tering.whynotswitch.com/token-economics/m3ter-nfts",
       linkText: "Further reading",
@@ -96,30 +88,30 @@ function M3teringSlideshow() {
         pagination={{ clickable: true }}
         // autoplay={{ delay: 5000, disableOnInteraction: false }}
         modules={[Navigation, Pagination, Autoplay]}
-        className="mySwiper w-full !h-[65%] rounded-lg"
+        className="mySwiper w-full !h-fit rounded-lg"
       >
         {slidesData.map((slide, i) => (
-          <SwiperSlide className={`!flex justify-center items-center`} key={i}>
-            <Card className={`w-[400px]`}>
-              <CardHeader>
-                <CardTitle>{slide.title}</CardTitle>
-              </CardHeader>
-              <CardContent className={`space-y-2 block`}>
-                <div
-                  className={`lg:w-[350px] lg:h-[320px] w-[300px] h-[300px] mx-auto block relative object-contain`}
-                >
-                  <Image
-                    src={slide.image.imageData}
-                    alt={slide.image.alt}
-                    fill
-                    className="shadow-lg"
-                    priority
-                  />
+          <SwiperSlide className="!flex justify-center items-center" key={i}>
+            <Card className="lg:w-[400px] md:w-[400px] w-[350px] lg:h-[400px] md:h-[400px] h-[350px]">
+              <CardHeader></CardHeader>
+              <CardContent className="space-y-2 block">
+                <div className="w-full flex justify-center">
+                  <div className="relative w-[350px] aspect-[16/9] overflow-hidden">
+                    <Image
+                      src={slide.image.imageData}
+                      alt={slide.image.alt}
+                      fill
+                      className="object-contain shadow-lg rounded-lg"
+                      priority
+                    />
+                  </div>
                 </div>
-                <p className={`text-[15px]`}>{slide.description}</p>
+                <p className="lg:text-[13px] md:text-[13px] text-[11px]">
+                  {slide.description}
+                </p>
                 <Link
                   href={slide.more.url}
-                  className="text-blue-600 hover:text-blue-800 font-medium underline inline-block mx-auto"
+                  className="text-blue-600 hover:text-blue-800 lg:text-[13px] md:text-[13px] text-[11px] underline inline-block mx-auto"
                 >
                   {slide.more.linkText}
                 </Link>
