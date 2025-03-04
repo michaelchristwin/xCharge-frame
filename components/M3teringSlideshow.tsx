@@ -9,7 +9,7 @@ import Meters from "@/public/nft.png";
 import Hardware from "@/public/m3ter.png";
 import Payment from "@/public/payment.png";
 import Onchain from "@/public/onchain.jpeg";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 
 type SlidesStruct = {
   title: string;
