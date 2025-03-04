@@ -228,22 +228,26 @@ const PaymentForm = () => {
                 ))}
               </div>
 
-              <input
-                type="text"
-                value={customAmount}
-                onChange={handleCustomAmountChange}
-                placeholder="Enter amount"
-                className="w-full text-lg text-white bg-transparent placeholder:text-gray-400 border-b border-[#9b6dff] focus:border-[#9b6dff] outline-none px-0 py-2 mb-4"
-              />
+              <div className={`relative h-[60px]`}>
+                <input
+                  type="text"
+                  value={customAmount}
+                  inputMode={"decimal"}
+                  onChange={handleCustomAmountChange}
+                  placeholder="Enter amount"
+                  className="w-full text-lg text-white bg-transparent placeholder:text-gray-400 outline-none px-0 py-2"
+                />
 
-              {totalAmount > 0 && (
-                <div className="text-sm text-white mb-4 pt-2">
-                  <div className="flex justify-between">
-                    <span>${totalAmount.toFixed(2)}</span>
-                    <span>{kwhValue.toFixed(2)} kWh⚡</span>
+                {totalAmount > 0 && (
+                  <div className="text-sm text-white pt-2 absolute bottom-1 left-0 w-full">
+                    <div className="flex justify-between w-full">
+                      <span>${totalAmount.toFixed(2)}</span>
+                      <span>=</span>
+                      <span>{kwhValue.toFixed(2)} kWh⚡</span>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
 
               <button
                 onClick={handleSubmit}
