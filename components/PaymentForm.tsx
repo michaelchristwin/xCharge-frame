@@ -88,11 +88,8 @@ const PaymentForm = () => {
 
   useEscapeKey(closeSlideshow);
 
-  const totalAmount =
-    selectedAmounts.reduce((sum, amount) => sum + amount, 0) +
-    (customAmount ? parseFloat(customAmount) : 0);
-
-  const kwhValue = totalAmount / ENERGY_PRICE_PER_KWH;
+  const kwhValue =
+    (customAmount ? parseFloat(customAmount) : 0) / ENERGY_PRICE_PER_KWH;
 
   const handleTokenIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, "");
@@ -104,7 +101,10 @@ const PaymentForm = () => {
     setAvatarTransitioned(true);
     setStep(2);
   };
-
+  useEffect(() => {
+    const b = selectedAmounts.reduce((sum, amount) => sum + amount, 0);
+    setCustomAmount(String(b));
+  }, [selectedAmounts]);
   const handleAmountToggle = (amount: number) => {
     if (selectedAmounts.includes(amount)) {
       setSelectedAmounts(selectedAmounts.filter((a) => a !== amount));
@@ -128,7 +128,7 @@ const PaymentForm = () => {
       const data = encodeFunctionData({
         abi: contractConfig.abi,
         functionName: "pay",
-        args: [BigInt(tokenId), BigInt(totalAmount)],
+        args: [BigInt(tokenId), BigInt(customAmount)],
       });
 
       sendTransaction({
@@ -136,7 +136,7 @@ const PaymentForm = () => {
         data: data,
       });
     },
-    [sendTransaction, tokenId, totalAmount]
+    [sendTransaction, tokenId, customAmount]
   );
 
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({
@@ -228,7 +228,7 @@ const PaymentForm = () => {
                 ))}
               </div>
 
-              <div className={`relative h-[60px]`}>
+              <div className={`relative mb-4`}>
                 <input
                   type="text"
                   value={customAmount}
@@ -238,21 +238,19 @@ const PaymentForm = () => {
                   className="w-full text-lg text-white bg-transparent placeholder:text-gray-400 outline-none px-0 py-2"
                 />
 
-                {totalAmount > 0 && (
-                  <div className="text-sm text-white pt-2 absolute bottom-1 left-0 w-full">
-                    <div className="flex justify-between w-full">
-                      <span>${totalAmount.toFixed(2)}</span>
-                      <span>=</span>
-                      <span>{kwhValue.toFixed(2)} kWh⚡</span>
-                    </div>
-                  </div>
+                {Number(customAmount) > 0 && (
+                  <span
+                    className={`text-sm text-white pt-2 absolute bottom-[50%] translate-y-[50%] right-0`}
+                  >
+                    {kwhValue.toFixed(2)} kWh⚡
+                  </span>
                 )}
               </div>
 
               <button
                 onClick={handleSubmit}
                 type="button"
-                disabled={isConfirming || totalAmount <= 0}
+                disabled={isConfirming || Number(customAmount) <= 0}
                 className="w-full py-3 rounded-lg bg-[#9b6dff] text-white hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isConfirming ? (
