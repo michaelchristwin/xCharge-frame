@@ -150,18 +150,11 @@ const PaymentForm = () => {
     <div className="h-full p-4 mt-[100px]">
       {/* Background decoration */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute top-20 left-20 w-64 h-64 bg-purple-300 rounded-full blur-3xl opacity-40" />
-        <div className="absolute bottom-40 right-20 w-96 h-96 bg-purple-400 rounded-full blur-3xl opacity-40" />
+        <div className="absolute top-20 left-20 w-64 h-64 rounded-full blur-3xl opacity-40" />
+        <div className="absolute bottom-40 right-20 w-96 h-96 rounded-full blur-3xl opacity-40" />
       </div>
 
       <div className="max-w-xl mx-auto relative">
-        {/* Avatar next to input */}
-        {/* {tokenId && !avatarTransitioned && (
-          <div className="absolute -right-20 top-0 transition-all duration-500 ease-in-out">
-            <M3terHead seed={tokenId} size={40} />
-          </div>
-        )} */}
-
         <div className="space-y-6">
           <div
             className={`transition-all duration-500 ${
@@ -170,7 +163,7 @@ const PaymentForm = () => {
                 : "opacity-0 -translate-y-10 absolute"
             }`}
           >
-            <div className="bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/30 rounded-2xl p-6 shadow-lg">
+            <div className="bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg">
               <div className="w-full flex flex-col h-fit items-center">
                 {tokenId ? (
                   <>
@@ -188,7 +181,7 @@ const PaymentForm = () => {
                 value={tokenId}
                 onChange={handleTokenIdChange}
                 placeholder="Enter M3ter ID"
-                className="w-full text-lg bg-transparent placeholder:text-neutral-500 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
+                className="w-full text-lg text-white bg-transparent placeholder:text-gray-200 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
               />
               <button
                 onClick={handleNextStep}
@@ -207,7 +200,7 @@ const PaymentForm = () => {
                 : "opacity-0 translate-y-10 absolute"
             }`}
           >
-            <div className="bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/30 rounded-2xl p-6 shadow-lg">
+            <div className="bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg">
               <div className="grid grid-cols-4 gap-3 mb-4">
                 {PRESET_AMOUNTS.map((amount) => (
                   <button
@@ -229,14 +222,14 @@ const PaymentForm = () => {
                 value={customAmount}
                 onChange={handleCustomAmountChange}
                 placeholder="Enter amount"
-                className="w-full text-lg bg-transparent placeholder:text-neutral-500 border-b border-purple-300 focus:border-purple-600 outline-none px-0 py-2 mb-4"
+                className="w-full text-lg text-white bg-transparent placeholder:text-gray-400 border-b border-[#9b6dff] focus:border-purple-600 outline-none px-0 py-2 mb-4"
               />
 
               {totalAmount > 0 && (
-                <div className="text-sm text-gray-600 mb-4 border-t border-purple-200 pt-2">
+                <div className="text-sm text-white mb-4 border-t border-[#9b6dff] pt-2">
                   <div className="flex justify-between">
                     <span>${totalAmount.toFixed(2)}</span>
-                    <span>{kwhValue.toFixed(2)} kWh</span>
+                    <span>{kwhValue.toFixed(2)} kWh⚡</span>
                   </div>
                 </div>
               )}
@@ -245,7 +238,7 @@ const PaymentForm = () => {
                 onClick={handleSubmit}
                 type="button"
                 disabled={isConfirming || totalAmount <= 0}
-                className="w-full py-3 rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3 rounded-lg bg-[#9b6dff] text-white hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isConfirming ? (
                   <Loader2 className="h-5 w-5 animate-spin" />

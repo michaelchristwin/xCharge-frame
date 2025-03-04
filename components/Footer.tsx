@@ -10,10 +10,10 @@ function Footer() {
   return (
     <footer className={`w-full`}>
       <p
-        className={`text-neutral-600 text-center fixed bottom-0 right-0 w-full underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
+        className={`text-white text-center fixed bottom-0 right-0 w-full underline hover:cursor-pointer flex items-center space-x-1 justify-center`}
         onClick={openSlideshow}
       >
-        <span> not sure what this is</span>
+        <span>not sure what this is</span>
         <CircleHelp className="w-4 h-4" />
       </p>
     </footer>

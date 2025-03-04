@@ -89,50 +89,45 @@ const slidesData: SlidesStruct[] = [
 function M3teringSlideshow() {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <div className="w-[80%] h-[80%] rounded-lg">
-        <Swiper
-          spaceBetween={0}
-          slidesPerView={1}
-          navigation={true}
-          pagination={{ clickable: true }}
-          // autoplay={{ delay: 5000, disableOnInteraction: false }}
-          modules={[Navigation, Pagination, Autoplay]}
-          className="mySwiper w-full h-[100%] rounded-lg"
-        >
-          {slidesData.map((slide, i) => (
-            <SwiperSlide
-              className={`!flex justify-center items-center`}
-              key={i}
-            >
-              <Card className={`w-[400px]`}>
-                <CardHeader>
-                  <CardTitle>{slide.title}</CardTitle>
-                </CardHeader>
-                <CardContent className={`space-y-2 block`}>
-                  <div
-                    className={`lg:w-[350px] lg:h-[350px] w-[300px] h-[300px] mx-auto block relative object-contain`}
-                  >
-                    <Image
-                      src={slide.image.imageData}
-                      alt={slide.image.alt}
-                      fill
-                      className="shadow-lg"
-                      priority
-                    />
-                  </div>
-                  <p className={`text-[15px]`}>{slide.description}</p>
-                  <Link
-                    href={slide.more.url}
-                    className="text-blue-600 hover:text-blue-800 font-medium underline inline-block mx-auto"
-                  >
-                    {slide.more.linkText}
-                  </Link>
-                </CardContent>
-              </Card>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        navigation={true}
+        pagination={{ clickable: true }}
+        // autoplay={{ delay: 5000, disableOnInteraction: false }}
+        modules={[Navigation, Pagination, Autoplay]}
+        className="mySwiper w-full !h-[65%] rounded-lg"
+      >
+        {slidesData.map((slide, i) => (
+          <SwiperSlide className={`!flex justify-center items-center`} key={i}>
+            <Card className={`w-[400px]`}>
+              <CardHeader>
+                <CardTitle>{slide.title}</CardTitle>
+              </CardHeader>
+              <CardContent className={`space-y-2 block`}>
+                <div
+                  className={`lg:w-[350px] lg:h-[320px] w-[300px] h-[300px] mx-auto block relative object-contain`}
+                >
+                  <Image
+                    src={slide.image.imageData}
+                    alt={slide.image.alt}
+                    fill
+                    className="shadow-lg"
+                    priority
+                  />
+                </div>
+                <p className={`text-[15px]`}>{slide.description}</p>
+                <Link
+                  href={slide.more.url}
+                  className="text-blue-600 hover:text-blue-800 font-medium underline inline-block mx-auto"
+                >
+                  {slide.more.linkText}
+                </Link>
+              </CardContent>
+            </Card>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   );
 }
