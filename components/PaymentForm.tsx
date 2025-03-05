@@ -19,9 +19,11 @@ import sdk from "@farcaster/frame-sdk";
 import { useAppContext } from "./providers/AppContextProvider";
 import { capitalizeWords } from "@/lib/utils";
 import { Skeleton } from "./ui/skeleton";
-import M3teringSlideshow from "./M3teringSlideshow";
 import useEscapeKey from "@/hooks/useEscapeKey";
 import { useSearchParams } from "next/navigation";
+// import M3teringSlideshow from "./M3teringSlideshow";
+// import SlickSlideshow from "./SlickSlideshow";
+import EmblaSlideshow from "./emblaSlideshow";
 
 const ENERGY_PRICE_PER_KWH = 0.06;
 const PRESET_AMOUNTS = [1, 2, 5, 10, 20, 50, 100];
@@ -279,7 +281,7 @@ const PaymentForm = () => {
 
           {/* Swiper Component */}
           <div className="w-full h-full max-w-5xl max-h-screen p-4">
-            <M3teringSlideshow />
+            <EmblaSlideshow />
           </div>
         </div>
       )}

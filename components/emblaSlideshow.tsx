@@ -7,6 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Onchain from "@/public/onchain.jpeg";
 import { Card, CardContent } from "./ui/card";
 import React, { useCallback, useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 type SlidesStruct = {
   title: string;
@@ -76,9 +77,10 @@ const slidesData: SlidesStruct[] = [
     },
   },
 ];
-const M3teringSlideshow: React.FC = () => {
+const EmblaSlideshow: React.FC = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
+    containScroll: "trimSnaps",
     skipSnaps: false,
   });
 
@@ -99,12 +101,12 @@ const M3teringSlideshow: React.FC = () => {
   }, [emblaApi]);
 
   return (
-    <div className="relative max-w-xl mx-auto p-4">
-      <div className="embla overflow-hidden" ref={emblaRef}>
-        <div className="embla__container flex space-x-4">
+    <div className="relative max-w-xl mx-auto p-4 h-full flex flex-col justify-center">
+      <div className="embla overflow-hidden w-full" ref={emblaRef}>
+        <div className="embla__container flex">
           {slidesData.map((slide, i) => (
-            <div className="embla__slide" key={i}>
-              <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[380px] md:h-[380px] h-[320px]">
+            <div className="embla__slide flex-[0_0_100%]" key={i}>
+              <Card className="lg:w-[400px] md:w-[400px] w-[300px] lg:h-[380px] md:h-[380px] h-[320px] mx-auto">
                 <CardContent className="space-y-2 block">
                   <div className="w-full flex justify-center">
                     <div className="relative w-[350px] aspect-[16/9] overflow-hidden">
@@ -139,13 +141,13 @@ const M3teringSlideshow: React.FC = () => {
           onClick={scrollPrev}
           className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
         >
-          Previous
+          <ArrowLeft className={`w-4 h-4`} />
         </button>
         <button
           onClick={scrollNext}
           className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
         >
-          Next
+          <ArrowRight className={`w-4 h-4`} />
         </button>
       </div>
 
@@ -171,4 +173,4 @@ const M3teringSlideshow: React.FC = () => {
   );
 };
 
-export default M3teringSlideshow;
+export default EmblaSlideshow;
