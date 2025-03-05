@@ -139,13 +139,13 @@ const EmblaSlideshow: React.FC = () => {
       <div className="flex justify-center space-x-4 mt-4">
         <button
           onClick={scrollPrev}
-          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
+          className="bg-[#9b6dff] text-white px-4 py-2 rounded hover:bg-[#8559f2] transition"
         >
           <ArrowLeft className={`w-4 h-4`} />
         </button>
         <button
           onClick={scrollNext}
-          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
+          className="bg-[#9b6dff] text-white px-4 py-2 rounded hover:bg-[#8559f2] transition"
         >
           <ArrowRight className={`w-4 h-4`} />
         </button>
@@ -164,7 +164,7 @@ const EmblaSlideshow: React.FC = () => {
             }}
             className={`
               w-3 h-3 rounded-full 
-              ${index === selectedIndex ? "bg-orange-600" : "bg-gray-300"}
+              ${index === selectedIndex ? "bg-[#8559f2]" : "bg-gray-300"}
             `}
           />
         ))}
