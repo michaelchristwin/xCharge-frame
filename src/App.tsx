@@ -1,0 +1,49 @@
+import { useEffect, useState } from "react";
+import { sdk } from "@farcaster/miniapp-sdk";
+import { AnimatePresence } from "motion/react";
+import { useSignals } from "@preact/signals-react/runtime";
+import { direction, step } from "./signals/store";
+import { InterfaceOne, InterfaceTwo } from "@/components/Interfaces";
+
+const App = () => {
+  const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+
+  useSignals(); // Needed to re-render on signal change
+
+  const nextInterface = () => {
+    direction.value = 1;
+    step.value++;
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (sdk && !isSDKLoaded) {
+        setIsSDKLoaded(true);
+        await sdk.actions.ready();
+      }
+    })();
+  }, []);
+
+  if (!isSDKLoaded) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        Loading...
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-full flex justify-center items-center relative">
+      <AnimatePresence
+        mode="popLayout"
+        initial={false}
+        custom={direction.value}
+      >
+        {step.value === 0 && <InterfaceOne key="step-1" next={nextInterface} />}
+        {step.value === 1 && <InterfaceTwo key="step-2" />}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default App;
