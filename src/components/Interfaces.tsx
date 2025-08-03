@@ -36,7 +36,7 @@ export const InterfaceOne = ({ next }: { next: () => void }) => {
         },
       }}
       exit={{ opacity: 0, x: direction * -50 }}
-      className="bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg lg:w-[400px] md:w-[350px] w-[300px] h-[320px] flex flex-col justify-around items-center"
+      className="backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg lg:w-[400px] md:w-[350px] w-[300px] h-[320px] flex flex-col justify-around items-center"
     >
       <div className="w-full flex flex-col items-center justify-between h-[113px]">
         {tokenId.value ? (
@@ -170,7 +170,7 @@ export const InterfaceTwo = () => {
         },
       }}
       exit={{ opacity: 0, x: direction * -50 }}
-      className="bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg lg:w-[400px] md:w-[350px] w-[300px] h-[320px]"
+      className="backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg lg:w-[400px] md:w-[350px] w-[300px] h-[320px]"
     >
       <div className="grid grid-cols-4 gap-3 mb-4">
         {PRESET_AMOUNTS.map((amt) => (
@@ -215,7 +215,7 @@ export const InterfaceTwo = () => {
       <button
         type="button"
         onClick={handleSubmit}
-        disabled={isConfirming}
+        disabled={isConfirming || !kwh}
         className="w-full py-3 rounded-lg bg-[#9b6dff] text-white hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {isConfirming ? (
