@@ -49,7 +49,7 @@ const App = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center relative">
-      <meta name="fc:frame" content={JSON.stringify(frame)} />
+      <meta name="fc:miniapp" content={JSON.stringify(frame)} />
       <AnimatePresence
         mode="popLayout"
         initial={false}
