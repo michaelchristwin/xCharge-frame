@@ -33,7 +33,7 @@ const App = () => {
   }
 
   return (
-    <div className="w-full h-[calc(100vh-40px)] flex justify-center items-center relative">
+    <div className="w-full h-[calc(100vh-40px)] flex justify-center items-center relative overflow-visible">
       <AnimatePresence
         mode="popLayout"
         initial={false}
