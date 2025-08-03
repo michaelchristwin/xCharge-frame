@@ -24,21 +24,6 @@ const App = () => {
     })();
   }, []);
 
-  const frame = {
-    version: "next",
-    imageUrl: `https://watt-a-frame.vercel.app/watt-a-frame.webp`,
-    button: {
-      title: "Launch Frame",
-      action: {
-        type: "launch_frame",
-        name: "Watt-A-Frame",
-        url: "https://watt-a-frame.vercel.app",
-        splashImageUrl: `https://watt-a-frame.vercel.app/lightbulb.png`,
-        splashBackgroundColor: "#f7f7f7",
-      },
-    },
-  };
-
   if (!isSDKLoaded) {
     return (
       <div className="w-full h-full flex justify-center items-center text-white text-[17px]">
@@ -49,7 +34,6 @@ const App = () => {
 
   return (
     <div className="w-full h-full flex justify-center items-center relative">
-      <meta name="fc:miniapp" content={JSON.stringify(frame)} />
       <AnimatePresence
         mode="popLayout"
         initial={false}
