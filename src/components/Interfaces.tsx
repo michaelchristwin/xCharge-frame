@@ -175,7 +175,7 @@ export const InterfaceTwo = () => {
           <button
             key={amt}
             onClick={() => handleAmountToggle(amt)}
-            className={`p-4 text-center rounded-lg transition-all ${
+            className={`p-2 text-center rounded-lg transition-all ${
               selected.includes(amt)
                 ? "bg-purple-200/80 text-purple-800"
                 : "bg-white/70 hover:bg-white/90"
