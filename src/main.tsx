@@ -8,6 +8,7 @@ import { WagmiProvider } from "wagmi";
 import { config } from "./config/wagmi.ts";
 import { Lightbulb } from "lucide-react";
 import { direction, step, tokenId } from "./signals/store.ts";
+import { Toaster } from "@/components/ui/sonner";
 // @ts-expect-error: No type declaration for the module
 import { M3terHead } from "m3ters";
 import { useSignals } from "@preact/signals-react/runtime";
@@ -47,6 +48,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           )}
         </header>
         {children}
+        <Toaster />
       </QueryClientProvider>
     </WagmiProvider>
   );
