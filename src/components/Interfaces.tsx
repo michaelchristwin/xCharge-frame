@@ -85,9 +85,11 @@ export const InterfaceTwo = () => {
   const direction = usePresenceData();
   const [selected, setSelected] = useState<number[]>([]);
   const [custom, setCustom] = useState("");
-  const [amoutInput, setAmountInput] = useState("");
-  const kwh = (custom ? parseFloat(custom) : 0) / ENERGY_PRICE_PER_KWH;
   const [customToggle, setCustomToggle] = useState(false);
+  const [amoutInput, setAmountInput] = useState("");
+  const kwh =
+    (custom ? parseFloat(customToggle ? amoutInput : custom) : 0) /
+    ENERGY_PRICE_PER_KWH;
   const { data: hash, sendTransaction } = useSendTransaction();
 
   const handleAmountToggle = (amount: number) => {
@@ -176,7 +178,7 @@ export const InterfaceTwo = () => {
             key={amt}
             onClick={() => handleAmountToggle(amt)}
             className={`p-2 text-center rounded-lg transition-all ${
-              selected.includes(amt)
+              selected.includes(amt) && !customToggle
                 ? "bg-purple-200/80 text-purple-800"
                 : "bg-white/70 hover:bg-white/90"
             }`}

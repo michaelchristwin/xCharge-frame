@@ -25,12 +25,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <header className="w-full h-[7vh] flex justify-between items-center fixed top-0 left-0 bg-transparent px-4 z-10">
+        <header className="w-full h-[40px] flex justify-between items-center fixed top-0 left-0 bg-transparent p-3 z-10">
           <div className="flex items-center space-x-1">
-            <Lightbulb className="text-yellow-500" size={30} />
+            <Lightbulb className="text-yellow-500 md:w-6 md:h-6 w-5 h-5" />
             <div className={`w-fit flex items-center space-x-1.5`}>
               <span
-                className={`lg:text-2xl md:text-2xl text-[19px] font-bold text-white`}
+                className={`lg:text-2xl md:text-2xl text-[16px] font-bold text-white`}
               >
                 Watt-A-Frame
               </span>
