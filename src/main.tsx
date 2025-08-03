@@ -25,7 +25,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <header className="w-full h-[40px] flex justify-between items-center fixed top-0 left-0 bg-transparent p-3 z-10">
+        <header className="w-full h-[50px] flex justify-between items-center fixed top-0 left-0 bg-transparent p-4 z-10">
           <div className="flex items-center space-x-1">
             <Lightbulb className="text-yellow-500 md:w-6 md:h-6 w-5 h-5" />
             <div className={`w-fit flex items-center space-x-1.5`}>

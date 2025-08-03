@@ -34,11 +34,7 @@ const App = () => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center relative">
-      <AnimatePresence
-        mode="popLayout"
-        initial={false}
-        custom={direction.value}
-      >
+      <AnimatePresence mode="wait" initial={false} custom={direction.value}>
         {step.value === 0 && <InterfaceOne key="step-1" next={nextInterface} />}
         {step.value === 1 && <InterfaceTwo key="step-2" />}
       </AnimatePresence>

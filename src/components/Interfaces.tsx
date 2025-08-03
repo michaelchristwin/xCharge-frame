@@ -29,10 +29,12 @@ export const InterfaceOne = ({ next }: { next: () => void }) => {
         opacity: 1,
         x: 0,
         transition: {
-          delay: 0.2,
+          delay: 0.1,
           type: "spring",
           visualDuration: 0.3,
           bounce: 0.4,
+          stiffness: 200,
+          damping: 25,
         },
       }}
       exit={{ opacity: 0, x: direction * -50 }}
@@ -63,7 +65,7 @@ export const InterfaceOne = ({ next }: { next: () => void }) => {
       {!isConnected ? (
         <button
           type="button"
-          className="inline-flex items-center w-full justify-center h-[40px] rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center w-full justify-center h-[40px] rounded-lg text-white bg-[#9b6dff] hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed font-bold"
           onClick={() => connect({ connector: connectors[0] })}
         >
           Connect Wallet
@@ -72,7 +74,7 @@ export const InterfaceOne = ({ next }: { next: () => void }) => {
         <button
           onClick={next}
           disabled={!tokenId.value}
-          className="inline-flex items-center px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center px-4 py-2 rounded-lg text-white bg-[#9b6dff] hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed"
         >
           <ChevronRight className="h-4 w-4" />
         </button>
@@ -163,14 +165,16 @@ export const InterfaceTwo = () => {
         opacity: 1,
         x: 0,
         transition: {
-          delay: 0.2,
+          delay: 0.1,
           type: "spring",
           visualDuration: 0.3,
           bounce: 0.4,
+          stiffness: 200,
+          damping: 25,
         },
       }}
       exit={{ opacity: 0, x: direction * -50 }}
-      className="backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg lg:w-[400px] md:w-[350px] w-[300px] h-[320px]"
+      className="backdrop-filter backdrop-blur-lg bg-opacity-10 bg-white/20 rounded-2xl p-6 shadow-lg lg:w-[400px] md:w-[350px] w-[300px] h-[320px] flex flex-col justify-around"
     >
       <div className="grid grid-cols-4 gap-3 mb-4">
         {PRESET_AMOUNTS.map((amt) => (
@@ -216,7 +220,7 @@ export const InterfaceTwo = () => {
         type="button"
         onClick={handleSubmit}
         disabled={isConfirming || !kwh}
-        className="w-full py-3 rounded-lg bg-[#9b6dff] text-white hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        className="w-full py-3 rounded-lg text-white bg-[#9b6dff] hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
       >
         {isConfirming ? (
           <Loader className="animate-spin h-4 w-4" />
