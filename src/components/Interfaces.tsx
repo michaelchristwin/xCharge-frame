@@ -86,7 +86,7 @@ export const InterfaceTwo = () => {
   const [selected, setSelected] = useState<number[]>([]);
   const [custom, setCustom] = useState("");
   const [customToggle, setCustomToggle] = useState(false);
-  const [amoutInput, setAmountInput] = useState("");
+  const [amoutInput, setAmountInput] = useState("0");
   const kwh =
     (custom ? parseFloat(customToggle ? amoutInput : custom) : 0) /
     ENERGY_PRICE_PER_KWH;
@@ -206,7 +206,7 @@ export const InterfaceTwo = () => {
           disabled={!customToggle}
           className="w-full text-lg text-white bg-transparent placeholder:italic placeholder:text-gray-400 outline-none px-0 py-2"
         />
-        {Number(custom) > 0 && (
+        {Number(customToggle ? amoutInput : custom) > 0 && (
           <span className="text-sm text-white pt-2 absolute bottom-[50%] translate-y-[50%] right-0">
             {kwh.toFixed(2)} kWh⚡
           </span>

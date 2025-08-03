@@ -26,14 +26,14 @@ const App = () => {
 
   if (!isSDKLoaded) {
     return (
-      <div className="w-full h-[calc(100vh-40px)] flex justify-center items-center text-white text-[17px]">
+      <div className="w-full h-screen flex justify-center items-center text-white text-[17px]">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="w-full h-[calc(100vh-40px)] flex justify-center items-center relative overflow-visible">
+    <div className="w-full h-screen flex justify-center items-center relative">
       <AnimatePresence
         mode="popLayout"
         initial={false}

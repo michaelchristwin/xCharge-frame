@@ -45,7 +45,6 @@
 body {
   width: 100dvw;
   height: 100dvh;
-  overflow-y: hidden;
   background: linear-gradient(100deg, #1a1025 0%, #2d1b3a 100%);
 }
 button {
