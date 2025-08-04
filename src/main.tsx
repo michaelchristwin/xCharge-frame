@@ -6,12 +6,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { WagmiProvider } from "wagmi";
 import { config } from "./config/wagmi.ts";
-import { Lightbulb } from "lucide-react";
+import { BadgeQuestionMarkIcon, Lightbulb } from "lucide-react";
 import { direction, step, tokenId } from "./signals/store.ts";
 import { Toaster } from "@/components/ui/sonner";
 // @ts-expect-error: No type declaration for the module
 import { M3terHead } from "m3ters";
 import { useSignals } from "@preact/signals-react/runtime";
+import AboutCarousel from "./components/AboutCarousel.tsx";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               >
                 Watt-A-Frame
               </span>
-              <Badge variant={"destructive"}>beta</Badge>
+              <Badge variant={"destructive"} className="font-semibold">
+                beta
+              </Badge>
             </div>
           </div>
           {/* Clickable Avatar */}
@@ -49,6 +52,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </header>
         {children}
         <Toaster />
+        <footer className="w-full h-[40px] flex justify-center items-center bg-[#9b6dff]/30 text-white">
+          <AboutCarousel>
+            <button
+              type="button"
+              className="space-x-1 flex items-center underline"
+            >
+              <span className="text-[16px]">not sure what this is</span>
+              <BadgeQuestionMarkIcon className="w-4 h-4" />
+            </button>
+          </AboutCarousel>
+        </footer>
       </QueryClientProvider>
     </WagmiProvider>
   );
