@@ -16,10 +16,12 @@ import { Switch } from "./ui/switch";
 import { encodeFunctionData } from "viem";
 import { contractConfig } from "@/config/wagmi";
 import { toast } from "sonner";
+import { useSignals } from "@preact/signals-react/runtime";
 
 export const InterfaceOne = ({ next }: { next: () => void }) => {
   const direction = usePresenceData();
   const { isConnected } = useAccount();
+  useSignals();
   const { connect, connectors } = useConnect();
 
   return (
@@ -66,7 +68,10 @@ export const InterfaceOne = ({ next }: { next: () => void }) => {
         <button
           type="button"
           className="inline-flex items-center w-full justify-center h-[40px] rounded-lg text-white bg-[#9b6dff] hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed font-bold"
-          onClick={() => connect({ connector: connectors[0] })}
+          onClick={() => {
+            connect({ connector: connectors[0] });
+            // next();
+          }}
         >
           Connect Wallet
         </button>
