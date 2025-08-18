@@ -70,7 +70,7 @@ export const InterfaceOne = ({ next }: { next: () => void }) => {
           className="inline-flex items-center w-full justify-center h-[40px] rounded-lg text-white bg-[#9b6dff] hover:bg-[#8559f2] disabled:hover:bg-[#9b6dff] disabled:opacity-70 disabled:cursor-not-allowed font-bold"
           onClick={() => {
             connect({ connector: connectors[0] });
-            // next();
+            //next();
           }}
         >
           Connect Wallet
@@ -187,7 +187,7 @@ export const InterfaceTwo = () => {
             key={amt}
             onClick={() => handleAmountToggle(amt)}
             className={`p-2 text-center rounded-lg transition-all ${
-              selected.includes(amt) && !customToggle
+              selected.includes(amt)
                 ? "bg-purple-200/80 text-purple-800"
                 : "bg-white/70 hover:bg-white/90"
             }`}
@@ -200,24 +200,38 @@ export const InterfaceTwo = () => {
         <div className="space-x-2 flex items-center">
           <Switch
             checked={customToggle}
-            onCheckedChange={() => setCustomToggle(!customToggle)}
+            onCheckedChange={() => {
+              setCustomToggle(!customToggle);
+              setSelected([]);
+            }}
           />
           <p className="text-white text-[13px]">Custom input</p>
         </div>
       </div>
       <div className="relative mb-4">
-        <input
-          type="text"
-          value={!customToggle ? custom : amoutInput}
-          inputMode="decimal"
-          onChange={!customToggle ? handleCustomChange : handleAmountInput}
-          placeholder="Enter amount"
-          disabled={!customToggle}
-          className="w-full text-lg text-white bg-transparent placeholder:italic placeholder:text-gray-400 outline-none px-0 py-2"
-        />
+        {customToggle ? (
+          <input
+            type="text"
+            value={amoutInput}
+            inputMode="decimal"
+            onChange={handleAmountInput}
+            placeholder="Enter amount"
+            className="w-full text-lg text-white bg-transparent placeholder:italic placeholder:text-gray-400 outline-none px-0 py-2"
+          />
+        ) : (
+          <input
+            type="text"
+            value={!customToggle ? custom : amoutInput}
+            inputMode="decimal"
+            onChange={!customToggle ? handleCustomChange : handleAmountInput}
+            placeholder="Enter amount"
+            disabled
+            className="w-full text-lg text-white bg-transparent placeholder:italic placeholder:text-gray-400 outline-none px-0 py-2"
+          />
+        )}
         {Number(customToggle ? amoutInput : custom) > 0 && (
           <span className="text-sm text-white pt-2 absolute bottom-[50%] translate-y-[50%] right-0">
-            {kwh.toFixed(2)} kWh⚡
+            {kwh.toFixed(2) || 0} kWh⚡
           </span>
         )}
       </div>
