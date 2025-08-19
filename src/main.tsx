@@ -52,7 +52,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </header>
         {children}
         <Toaster />
-        <footer className="w-full h-[40px] flex justify-center items-center bg-[#9b6dff]/30 text-white">
+        <footer className="w-full h-[40px] flex justify-center items-center bg-white/10 backdrop-blur-lg text-white">
           <AboutCarousel>
             <button
               type="button"

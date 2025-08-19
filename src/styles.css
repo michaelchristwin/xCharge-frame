@@ -45,13 +45,14 @@
 body {
   width: 100dvw;
   height: 100dvh;
-  background: linear-gradient(100deg, #1a1025 0%, #2d1b3a 100%);
+  background: radial-gradient(circle at center, #3c2a52 0%, #1f1332 70%);
   position: relative;
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
   font-display: swap;
 }
+
 button {
   cursor: pointer;
 }
